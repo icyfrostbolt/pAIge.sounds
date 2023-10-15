@@ -21,5 +21,4 @@ def get_summary(book_title):
     return
 
 
-print(get_summary("Pride and Prejudice"))
 

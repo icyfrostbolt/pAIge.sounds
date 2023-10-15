@@ -13,7 +13,7 @@ sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id="bf59f0ce78b14139b3492d
                                                client_secret="f39b5d6b702341bb963c9bd9ee84478e",
                                                redirect_uri='http://localhost:3000',
                                                scope=scope))
-
+playlist_link = str()
 
 # results = sp.current_user_saved_tracks()
 # for idx, item in enumerate(results['items']):
@@ -31,36 +31,35 @@ class Song:
         def getArtist():
             return artist
 
-def askGPT(listOfSongs, summary):
-    gpt_result = Chatwithgpt.chat_with_gpt(summary)
-    #print(gpt_result)
-    data_gpt = json.loads(gpt_result)
-    #print(data_gpt)
-
-    try:
-        #print(type(data_gpt))
-        for title_artist in data_gpt["playlist"]:
-            #print(title_artist)
-            listOfSongs.append(Song(title_artist["title"], title_artist["artist"]))
-        #print(listOfSongs)
-    except TypeError:
-        listOfSongs = []
-        askGPT(listOfSongs, summary)
-
 
 def createPlaylist(bookName):
     playlist = sp.user_playlist_create(user=sp.me()['id'], name=bookName, public=False,
                                        description=f"Auto generated playlist for {bookName}")
     playlist_ID = playlist['id']
-    print(playlist)
-    print(playlist['external_urls']['spotify'])
+    playlist_link = playlist['external_urls']['spotify']
+    print(playlist_link)
+    file = open("link.txt", 'w')
+    file.write(playlist_link)
 
     summary = gs.get_summary(bookName)
     #print(summary)
 
     listOfSongs = []
 
-    askGPT(listOfSongs, summary)
+    gpt_result = Chatwithgpt.chat_with_gpt(summary)
+    #print(gpt_result)
+    data_gpt = json.loads(gpt_result)
+    #print(data_gpt)
+    '''
+    for title_artist in gpt_result:
+        print(title_artist)
+        listOfSongs.append(Song(title_artist["title"], title_artist["artist"]))
+'''
+    #print(type(data_gpt))
+    for title_artist in data_gpt["playlist"]:
+        #print(title_artist)
+        listOfSongs.append(Song(title_artist["title"], title_artist["artist"]))
+    print(listOfSongs)
 
     for song in listOfSongs:
         try:
@@ -71,7 +70,7 @@ def createPlaylist(bookName):
             tracks = [item["tracks"]["items"][0]["uri"]]
             #tracks = ['spotify:track:2nMeu6UenVvwUktBCpLMK9']
             #print(tracks)
-            print("why isn't this working")
+            #print("why isn't this working")
             sp.playlist_add_items(playlist_id=playlist_ID,
                                   items=tracks,
                                   position=0)
@@ -79,4 +78,4 @@ def createPlaylist(bookName):
             print('Something went wrong')
 
 
-createPlaylist("The Great Gatsby")
+#createPlaylist("The Great Gatsby")
