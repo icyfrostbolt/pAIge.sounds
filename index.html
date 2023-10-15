@@ -18,13 +18,22 @@
     <div class="half_screen">
       <div class="empty_div">
         <p class="regular_text">Book Name</p>
-        <input type="text" id="book_title" name="book_title"><br>
+        <form name="input" target="#here" method="post">
+          <input type="text" id="book_title" name="book_title" placeholder="Book title"><br>
+          <input type="submit" hidden />
+        </form>
       </div>
     </div>
     <div class="half_screen">
-      <p class="regular_text">Recommendation Placeholder</p>
-      <p class="regular_text">Recommendation Placeholder</p>
-      <p class="regular_text">Recommendation Placeholder</p>
+      <div class="placeholder_div">
+        <p class="regular_text">Recommendation Placeholder</p>
+      </div>
+      <div class="placeholder_div">
+        <p class="regular_text">Recommendation Placeholder</p>
+      </div>
+      <div class="placeholder_div">
+        <p class="regular_text">Recommendation Placeholder</p>
+      </div>
     </div>
   </div>
   <script src="script.js"></script>
