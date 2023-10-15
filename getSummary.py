@@ -1,8 +1,14 @@
 import wikipedia
-from flask import flask, render_template, request
+from flask import *
 
-def get_summary():
+
+def get_title():
     book_title = request.form["book_title"]
+    return book_title
+
+
+def get_summary(book_title):
+    #book_title = request.form["book_title"]
     page = wikipedia.page(book_title, auto_suggest=False)
 
     summary_titles = ["Plot", "Plot summary", "Summary", "Synopsis"]
@@ -11,4 +17,8 @@ def get_summary():
     for title in summary_titles:
         summary_section = page.section(title)
         if summary_section:
-            break
+            return summary_section
+    return
+
+
+print(get_summary("Pride and Prejudice"))
