@@ -1,15 +1,15 @@
 import os
 import openai
 
-#openai.api_key = os.getenv("OPENAI_API_KEY2")  # API key
-openai.api_key = "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"
+openai.api_key = os.getenv("OPENAI_API_KEY3")  # API key
+#openai.api_key =
 
-def chat_with_gpt(book_name):
+def chat_with_gpt(summary):
     response = openai.ChatCompletion.create(
         model="gpt-3.5-turbo",
         messages=[{"role": "user", "content": "make a playlist of 3 songs with just song titles and " +
-                                              "artists that match the vibe of " +
-                                              book_name +
+                                              "artists that match the vibe of the following summary:" +
+                                              summary +
                                               "in json format named playlist, organized with \'title\' and artist" +
                                               ". Only include JSON in your response " +
                                               "with no other words"}],
@@ -18,4 +18,3 @@ def chat_with_gpt(book_name):
     #print(content)
     return content
 
-chat_with_gpt("Twilight")

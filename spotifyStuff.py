@@ -42,7 +42,7 @@ def createPlaylist(bookName):
 
     listOfSongs = []
 
-    gpt_result = Chatwithgpt.chat_with_gpt(bookName)
+    gpt_result = Chatwithgpt.chat_with_gpt(summary)
     print(gpt_result)
     data_gpt = json.loads(gpt_result)
     print(data_gpt)
