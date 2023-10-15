@@ -7,7 +7,7 @@ openai.api_key = os.getenv("OPENAI_API_KEY3")  # API key
 def chat_with_gpt(summary):
     response = openai.ChatCompletion.create(
         model="gpt-3.5-turbo",
-        messages=[{"role": "user", "content": "make a playlist of 3 songs with just song titles and " +
+        messages=[{"role": "user", "content": "make a playlist of 3 real songs with just song titles and " +
                                               "artists that match the vibe of the following summary:" +
                                               summary +
                                               "in json format named playlist, organized with \'title\' and artist" +

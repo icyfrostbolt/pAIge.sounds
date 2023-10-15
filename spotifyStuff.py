@@ -31,41 +31,46 @@ class Song:
         def getArtist():
             return artist
 
+def askGPT(listOfSongs, summary):
+    gpt_result = Chatwithgpt.chat_with_gpt(summary)
+    #print(gpt_result)
+    data_gpt = json.loads(gpt_result)
+    #print(data_gpt)
+
+    try:
+        #print(type(data_gpt))
+        for title_artist in data_gpt["playlist"]:
+            #print(title_artist)
+            listOfSongs.append(Song(title_artist["title"], title_artist["artist"]))
+        #print(listOfSongs)
+    except TypeError:
+        listOfSongs = []
+        askGPT(listOfSongs, summary)
+
 
 def createPlaylist(bookName):
     playlist = sp.user_playlist_create(user=sp.me()['id'], name=bookName, public=False,
                                        description=f"Auto generated playlist for {bookName}")
     playlist_ID = playlist['id']
+    print(playlist)
+    print(playlist['external_urls']['spotify'])
 
     summary = gs.get_summary(bookName)
-    print(summary)
+    #print(summary)
 
     listOfSongs = []
 
-    gpt_result = Chatwithgpt.chat_with_gpt(summary)
-    print(gpt_result)
-    data_gpt = json.loads(gpt_result)
-    print(data_gpt)
-    '''
-    for title_artist in gpt_result:
-        print(title_artist)
-        listOfSongs.append(Song(title_artist["title"], title_artist["artist"]))
-'''
-    print(type(data_gpt))
-    for title_artist in data_gpt["playlist"]:
-        print(title_artist)
-        listOfSongs.append(Song(title_artist["title"], title_artist["artist"]))
-    print(listOfSongs)
+    askGPT(listOfSongs, summary)
 
     for song in listOfSongs:
         try:
             tArtString = "track:" + song.title  # + "%20artist:" + song.artist
             item = sp.search(q=tArtString, limit=1, type='track')
-            print(item)
-            print("abcdefgh")
+            #print(item)
+            #print("abcdefgh")
             tracks = [item["tracks"]["items"][0]["uri"]]
             #tracks = ['spotify:track:2nMeu6UenVvwUktBCpLMK9']
-            print(tracks)
+            #print(tracks)
             print("why isn't this working")
             sp.playlist_add_items(playlist_id=playlist_ID,
                                   items=tracks,
