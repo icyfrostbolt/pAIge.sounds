@@ -47,7 +47,9 @@
 }
 
 input {
-    width: 100%;
+    width: 80%;
+    margin: 0 auto;
+    display: block;
     height: 20px;
     justify-content: center;
     background-color: lightgray;
@@ -56,4 +58,9 @@ input {
 
 input[type=text]:focus {
     background-color: beige;
+}
+
+#submit
+{
+    visibility: hidden;
 }
