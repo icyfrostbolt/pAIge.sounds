@@ -1,0 +1,48 @@
+.header {
+    background-color: grey;
+    height: 10%;
+    width: 100%;
+    padding: 0;
+    vertical-align: middle;
+}
+
+.header_text {
+    color: black;
+    font-family: Arial;
+    font-size: 2.5em;
+    text-align: center;
+}
+
+.regular_text{
+    color: black;
+    font-family: Arial;
+    font-size: 1.5em;
+    text-align: center;
+}
+
+.empty_div {
+    padding-top: 20vh;
+    width: 100%;
+    height: 20%;
+}
+
+.split_side_screen {
+    padding-left: 0;
+    width: 100%;
+    height: 60vh;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.half_screen {
+    padding-left: 0;
+    width: 50vw;
+    height: 50vh;
+    display: inline-block;
+}
+
+input {
+    width: 100%;
+    height: 20px;
+    justify-content: center;
+}
